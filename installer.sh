@@ -109,8 +109,8 @@ spinner $! &
 wait
 
 # Get run script
-cd $BASE_DIR
-wget -O - https://raw.githubusercontent.com/Nauman3S/NFCEmu-QuickStart/main/run.sh | bash
+cd ${BASE_DIR}
+wget https://raw.githubusercontent.com/Nauman3S/NFCEmu-QuickStart/main/run.sh -O run.sh 
 chmod +x run.sh
 
 # End message
