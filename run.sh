@@ -21,6 +21,9 @@ cd "$GUI_DIR"
 DISPLAY=:0 python3 "$GUI_PATH" &
 
 # Wait for the socket server to start
+echo "Waiting for the socket server to be ready..."
+sleep 10  # Introducing a delay of 10 seconds to ensure the server is ready
+
 while ! is_process_running "$GUI_PATH"; do
     sleep 1
 done
