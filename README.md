@@ -49,7 +49,7 @@ What things you need to install the software and how to install them.
 
 You will need to run the following command in order to install or update the NFCEmu
 ```bash
-wget -O - https://raw.githubusercontent.com/Nauman3S/NFCEmu-QuickStart/main/install.sh | bash
+wget -O - https://raw.githubusercontent.com/Nauman3S/NFCEmu-QuickStart/main/installer.sh | bash
 ```
 ## ⛏️ Running <a name = "test"></a>
 
