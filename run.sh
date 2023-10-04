@@ -2,7 +2,8 @@
 
 # Define paths
 BASE_DIR=~/NFCEmu
-GUI_PATH="${BASE_DIR}/NFC-TerminalGUI-main/NFCD_GUI/tk_ui.py"
+GUI_DIR="${BASE_DIR}/NFC-TerminalGUI-main/NFCD_GUI"
+GUI_PATH="${GUI_DIR}/tk_ui.py"
 CPP_PROGRAM_PATH="${BASE_DIR}/NFCEmulator-main/Firmware/RPi_AndroidHCE/android_hce"
 
 # Function to check if a process is running
@@ -14,6 +15,9 @@ is_process_running() {
 
 # Start the socket server (Python3 based tkinter GUI)
 echo "Starting socket server..."
+
+# Change to GUI directory to ensure relative paths in the Python script work correctly
+cd "$GUI_DIR"
 DISPLAY=:0 python3 "$GUI_PATH" &
 
 # Wait for the socket server to start
