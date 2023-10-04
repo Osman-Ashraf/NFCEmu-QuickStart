@@ -13,6 +13,23 @@ is_process_running() {
     return $?
 }
 
+# Function to check if the socket server is listening on the expected port (assuming port 9999)
+is_socket_server_ready() {
+    netstat -tuln | grep -q ":9999 "
+    return $?
+}
+
+# Kill existing processes if they are running
+if is_process_running "$GUI_PATH"; then
+    pkill -f "$GUI_PATH"
+    echo "Existing Python GUI process killed."
+fi
+
+if is_process_running "$CPP_PROGRAM_PATH"; then
+    pkill -f "$CPP_PROGRAM_PATH"
+    echo "Existing C++ program process killed."
+fi
+
 # Start the socket server (Python3 based tkinter GUI)
 echo "Starting socket server..."
 
@@ -20,11 +37,9 @@ echo "Starting socket server..."
 cd "$GUI_DIR"
 DISPLAY=:0 python3 "$GUI_PATH" &
 
-# Wait for the socket server to start
+# Wait for the socket server to be ready
 echo "Waiting for the socket server to be ready..."
-sleep 10  # Introducing a delay of 10 seconds to ensure the server is ready
-
-while ! is_process_running "$GUI_PATH"; do
+while ! is_socket_server_ready; do
     sleep 1
 done
 echo "Socket server started."
