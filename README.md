@@ -45,7 +45,16 @@ What things you need to install the software and how to install them.
 - Raspberry Pi Model 3B, 3B+, 4B or CM4
 ```
 
+- Specify the [GitHub Personal Access Token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
+
+
 ## Installation and Update <a name = "Installation_and_Config"></a>
+
+- Once you have the GitHub Personal Access Token execute the following command on the terminal
+
+```bash
+export TOKEN=[Replace with GitHub Personal Access Token HERE]
+```
 
 You will need to run the following command in order to install or update the NFCEmu
 ```bash
