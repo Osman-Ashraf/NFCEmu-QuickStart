@@ -58,7 +58,7 @@ export TOKEN=[Replace with GitHub Personal Access Token HERE]
 
 You will need to run the following command in order to install or update the NFCEmu
 ```bash
-wget -O - https://raw.githubusercontent.com/Nauman3S/NFCEmu-QuickStart/main/installer.sh | bash
+wget -O -  https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/installer.sh | bash
 ```
 ## ⛏️ Running <a name = "test"></a>
 
