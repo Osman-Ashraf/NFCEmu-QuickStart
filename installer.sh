@@ -114,12 +114,14 @@ wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/run.s
 wait
 chmod +x run.sh
 
+output_zip1="${BASE_DIR}/NFCEmulator-1-main.zip"
+output_zip2="${BASE_DIR}/NFCTerminalGUI.zip"
 # End message
 if [ "$UPDATE" = true ]; then
     display_message "NFCEmulator Updated"
-    local output_zip1="${BASE_DIR}/NFCEmulator-1-main.zip"
-    local output_zip2="${BASE_DIR}/NFCTerminalGUI.zip"
+    
     rm -rf $output_zip1 $output_zip2
 else
     display_message "NFCEmulator Installed"
+    rm -rf $output_zip1 $output_zip2
 fi
