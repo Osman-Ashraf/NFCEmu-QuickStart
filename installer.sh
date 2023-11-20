@@ -79,8 +79,8 @@ download_and_extract() {
 }
 
 # Download and extract repositories in parallel
-download_and_extract "https://github.com/Nauman3S/NFC-TerminalGUI/archive/refs/heads/main.zip" "NFC-TerminalGUI" &
-download_and_extract "https://github.com/Nauman3S/NFCEmulator/archive/refs/heads/main.zip" "NFCEmulator" &
+download_and_extract "https://github.com/Osman-Ashraf/NFC-TerminalGUI/archive/refs/heads/main.zip" "NFC-TerminalGUI" &
+download_and_extract "https://github.com/Osman-Ashraf/NFCEmulator/archive/refs/heads/main.zip" "NFCEmulator" &
 
 # Wait for both downloads to complete
 wait
@@ -110,7 +110,7 @@ wait
 
 # Get run script
 cd ${BASE_DIR} || exit
-wget https://raw.githubusercontent.com/Nauman3S/NFCEmu-QuickStart/main/run.sh -O ${BASE_DIR}/run.sh 
+wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/run.sh -O ${BASE_DIR}/run.sh 
 wait
 chmod +x run.sh
 
