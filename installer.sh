@@ -80,7 +80,7 @@ download_and_extract() {
 
 # Download and extract repositories in parallel
 download_and_extract "https://github.com/Osman-Ashraf/NFC-TerminalGUI/archive/refs/heads/main.zip" "NFC-TerminalGUI" &
-download_and_extract "https://github.com/Osman-Ashraf/NFCEmulator-1/archive/refs/heads/main.zip" "NFCEmulator-1" &
+download_and_extract "https://github.com/Osman-Ashraf/NFCEmulator-1/archive/refs/heads/main.zip" "NFCEmulator-1-main" &
 
 # Wait for both downloads to complete
 wait
