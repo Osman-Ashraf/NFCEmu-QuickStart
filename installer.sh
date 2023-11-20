@@ -31,7 +31,7 @@ fi
 BASE_DIR=~/NFCEmu
 
 # Check if it's a fresh install or an update
-if [[ -d "${BASE_DIR}/NFC-TerminalGUI-main" && -d "${BASE_DIR}/NFCEmulator-main" ]]; then
+if [[ -d "${BASE_DIR}/NFC-TerminalGUI-main" && -d "${BASE_DIR}/NFCEmulator-1-main" ]]; then
     UPDATE=true
 else
     UPDATE=false
@@ -99,7 +99,7 @@ if ! pip3 freeze | grep -q -f requirements.txt; then
 fi
 
 # Clean up and setup NFCEmulator
-cd "${BASE_DIR}/NFCEmulator-main" || exit
+cd "${BASE_DIR}/NFCEmulator-1-main" || exit
 rm -rf !("Firmware")
 cd Firmware || exit
 rm -rf !("RPi_AndroidHCE")
