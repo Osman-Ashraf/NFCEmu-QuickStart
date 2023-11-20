@@ -75,7 +75,7 @@ download_and_extract() {
 
     # Extract the repository
     unzip -o -q "${output_zip}" -d "${BASE_DIR}"
-    rm "${output_zip}"  # Remove the downloaded zip file
+    # rm "${output_zip}"  # Remove the downloaded zip file
 }
 
 # Download and extract repositories in parallel
