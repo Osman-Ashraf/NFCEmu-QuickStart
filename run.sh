@@ -4,7 +4,7 @@
 BASE_DIR=~/NFCEmu
 GUI_DIR="${BASE_DIR}/NFC-TerminalGUI-main/NFCD_GUI"
 GUI_PATH="${GUI_DIR}/tk_ui.py"
-CPP_PROGRAM_PATH="${BASE_DIR}/NFCEmulator-main/Firmware/RPi_AndroidHCE/android_hce"
+CPP_PROGRAM_PATH="${BASE_DIR}/NFCEmulator-1-main/Firmware/RPi_AndroidHCE/android_hce"
 
 # Function to check if a process is running
 is_process_running() {
