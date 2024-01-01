@@ -3,19 +3,15 @@
  <img width=200px height=200px src="artwork/nfcemul.png" alt="Project logo"></a>
 </p>
 
-<h3 align="center">NFCEmulator Quickstart</h3>
+<h3 align="center">NFCEmu-QuickStart</h3>
 
-<div align="center">
-
+<h2 align="center"> 
+	
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
+</h2>
 
 
-</div>
-
----
-
-
-<p align="center"> NFCEmulator Quickstart
+<p align="center"> NFC Terminal Quick Setup
     <br> 
 </p>
 
@@ -28,10 +24,11 @@
 - [Test](#test)
 - [Built Using](#built_using)
 - [Authors](#authors)
+- [Contributors](#contributors)
 
 ## 🧐 About <a name = "about"></a>
 
-This repo contains UI for NFC Device.
+This repository contains the installer setup for quick setup of NFC Terminal app.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
@@ -42,10 +39,11 @@ These instructions will get you a copy of the project up and running on your Ras
 What things you need to install the software and how to install them.
 
 ```
-- Raspberry Pi Model 3B, 3B+, 4B or CM4
+- Raspberry Pi Model 3B, 3B+, 4B or CM4 (with Internet Connection)
+- Github Personal Access Token
 ```
 
-- Specify the [GitHub Personal Access Token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
+- Get a [GitHub Personal Access Token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
 
 
 ## Installation and Update <a name = "Installation_and_Config"></a>
@@ -53,7 +51,7 @@ What things you need to install the software and how to install them.
 - Once you have the GitHub Personal Access Token execute the following command on the terminal
 
 ```bash
-export TOKEN=[Replace with GitHub Personal Access Token HERE]
+export TOKEN=[REPLACE_WITH_GITHUB_PERSONAL_ACCESS_TOKEN]
 ```
 
 You will need to run the following command in order to install or update the NFCEmu
@@ -76,3 +74,7 @@ cd ~/NFCEmu
 ## ✍️ Authors <a name = "authors"></a>
 
 - [@Nauman3S](https://github.com/Nauman3S) - Development and Deployment
+
+## 🤝 Contributors <a name = "contributors"></a>
+
+- [@ali-yasir-binairy](https://github.com/ali-yasir-binairy) 
