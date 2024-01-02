@@ -4,21 +4,21 @@
 spinner() {
     local pid=$1
     local delay=0.1
-    local frames=("◯" "⭕" "○" "⭖" "⭗" "⭘" "⭙" "⭚" "⭛")
+    local frames=("◐" "◓" "◑" "◒")
     local colors=("96" "92" "93" "95" "91")
     local color_idx=0
 
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
         for frame in "${frames[@]}"; do
             local color="\e[${colors[$color_idx]}m"
-            printf "${color}${frame} ${color}\b\b\b\b\b\b\b\b\b\b\b"
+            printf "${color}${frame} ${color}\b\b\b\b"
             sleep $delay
         done
 
         color_idx=$(( (color_idx + 1) % ${#colors[@]} ))
     done
 
-    printf "        \b\b\b\b\b\b\b\b\b\b\e[0m"
+    printf "    \b\b\b\b\e[0m"
 }
 
 # Check for internet connection
@@ -86,13 +86,22 @@ fi
 
 # Display messages in big font
 display_message() {
-    local message="$1"
-    local width=50
+    local msg="$1"
+    local box_top="╭"
+    local box_bottom="╰"
+
+    for ((i = 0; i < ${#msg} + 4; i++)); do
+        box_top+="─"
+        box_bottom+="─"
+    done
+
+    box_top+="╮"
+    box_bottom+="╯"
 
     echo -e "\n"
-    printf "%s\n" "$(printf '#%.0s' $(seq "$width"))"
-    printf "#%-*s#\n" "$width" "$message"
-    printf "%s\n" "$(printf '#%.0s' $(seq "$width"))"
+    echo -e "\e[38;5;208m$box_top\e[0m"
+    printf "\e[38;5;208m│ \e[1m%-$((${#msg} + 2))s\e[38;5;208m│\e[0m\n" "$msg"
+    echo -e "\e[38;5;208m$box_bottom\e[0m"
     echo -e "\n"
 }
 
