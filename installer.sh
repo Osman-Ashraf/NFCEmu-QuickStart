@@ -35,6 +35,32 @@ if [[ -d "${BASE_DIR}/NFC-TerminalGUI-main" && -d "${BASE_DIR}/NFCEmulator-1-mai
     UPDATE=true
 else
     UPDATE=false
+    # Update the package list
+    sudo apt-get update
+
+    # Upgrade installed packages
+    sudo apt-get upgrade -y
+
+    # Install necessary packages
+    sudo apt-get install -y git autoconf libtool libusb-dev
+
+    # Enable SPI interface using raspi-config
+    sudo raspi-config nonint do_spi 0
+
+    # Clone the libnfc repository
+    cd ~
+    git clone https://github.com/nfc-tools/libnfc
+
+    # Navigate to the libnfc directory
+    cd libnfc
+
+    # Create the /etc/nfc directory if it doesn't exist
+    sudo mkdir -p /etc/nfc
+
+    # Open libnfc.conf file for editing using echo to append content
+    echo 'allow_autoscan = true' | sudo tee -a /etc/nfc/libnfc.conf
+    echo 'device.name = "PN532 over SPI"' | sudo tee -a /etc/nfc/libnfc.conf
+    echo 'device.connstring = "pn532_spi:/dev/spidev0.0:100000"' | sudo tee -a /etc/nfc/libnfc.conf
 fi
 
 # Display messages in big font
