@@ -12,10 +12,10 @@ spinner() {
         printf "\e[38;5;208m%s\e[0m " "${frames[$current_frame]}"
         current_frame=$(( (current_frame + 1) % frame_count ))
         sleep $delay
-        printf "\b\b\b\b\b"
+        printf "\b\b\b\b"
     done
 
-    printf "      \b\b\b\b\b"
+    printf "        \b\b\b\b\b\b\b\b\b\b"
 }
 
 # Check for internet connection
@@ -91,9 +91,6 @@ display_message() {
         box_top+="─"
         box_bottom+="─"
     done
-
-    box_top+="-"
-    box_bottom+="-"
 
     echo -e "\n"
     echo -e "\e[38;5;208m$box_top\e[0m"
