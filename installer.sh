@@ -4,18 +4,21 @@
 spinner() {
     local pid=$1
     local delay=0.1
-    local spinstr='⣾⣽⣻⢿⡿⣟⣯⣷'
-    local colors=( "\e[96m" "\e[92m" "\e[93m" "\e[95m" "\e[91m" )
-    local i=0
+    local frames=("◯" "⭕" "○" "⭖" "⭗" "⭘" "⭙" "⭚" "⭛")
+    local colors=("96" "92" "93" "95" "91")
+    local color_idx=0
 
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
-        local color="${colors[$((i % ${#colors[@]}))]}"
-        printf "${color}[%s] ${color}\b\b\b\b" "${spinstr:$i:1}"
-        i=$(( (i+1) % ${#spinstr} ))
-        sleep $delay
+        for frame in "${frames[@]}"; do
+            local color="\e[${colors[$color_idx]}m"
+            printf "${color}${frame} ${color}\b\b\b\b\b\b\b\b\b\b\b"
+            sleep $delay
+        done
+
+        color_idx=$(( (color_idx + 1) % ${#colors[@]} ))
     done
 
-    printf "    \b\b\b\b\e[0m"
+    printf "        \b\b\b\b\b\b\b\b\b\b\e[0m"
 }
 
 # Check for internet connection
