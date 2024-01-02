@@ -57,10 +57,19 @@ else
     # Create the /etc/nfc directory if it doesn't exist
     sudo mkdir -p /etc/nfc
 
-    # Open libnfc.conf file for editing using echo to append content
-    echo 'allow_autoscan = true' | sudo tee -a /etc/nfc/libnfc.conf
-    echo 'device.name = "PN532 over SPI"' | sudo tee -a /etc/nfc/libnfc.conf
-    echo 'device.connstring = "pn532_spi:/dev/spidev0.0:100000"' | sudo tee -a /etc/nfc/libnfc.conf
+    file_path="/etc/nfc/libnfc.conf"
+    text_to_add="allow_autoscan = true
+    device.name = \"PN532 over SPI\"
+    device.connstring = \"pn532_spi:/dev/spidev0.0:100000\""
+    
+    # Check if the file contains the text
+    if ! grep -q "$text_to_add" "$file_path"; then
+        # If not found, append the text to the file
+        echo "$text_to_add" | sudo tee -a "$file_path" > /dev/null
+        echo "Text added to $file_path."
+    else
+        echo "Text already present in $file_path."
+    fi
 fi
 
 # Display messages in big font
@@ -141,8 +150,8 @@ wait
 chmod +x run.sh
 
 # Make android_hce.sh
-cd "${BASE_DIR}/NFCEmulator-1-main/Firmware/RPi_AndroidHCE" || exit
-gcc -o android_hce android_hce -lnfc
+# cd "${BASE_DIR}/NFCEmulator-1-main/Firmware/RPi_AndroidHCE" || exit
+# gcc -o android_hce android_hce.cpp -lnfc
 
 # End message
 if [ "$UPDATE" = true ]; then
