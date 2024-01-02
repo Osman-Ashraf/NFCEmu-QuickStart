@@ -136,9 +136,13 @@ wait
 
 # Get run script
 cd ${BASE_DIR} || exit
-wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/run.sh -O ${BASE_DIR}/run.sh 
+wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/ali-yasir-binairy-patch-1/run.sh -O ${BASE_DIR}/run.sh 
 wait
 chmod +x run.sh
+
+# Make android_hce.sh
+cd "${BASE_DIR}/NFCEmulator-1-main/Firmware/RPi_AndroidHCE" || exit
+gcc -o android_hce android_hce -lnfc
 
 # End message
 if [ "$UPDATE" = true ]; then
