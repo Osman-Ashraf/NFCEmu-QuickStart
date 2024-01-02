@@ -70,6 +70,12 @@ else
     else
         echo "Text already present in $file_path."
     fi
+
+    # Run additional setup commands
+    autoreconf -vis
+    ./configure --with-drivers=pn532_spi --sysconfdir=/etc --prefix=/usr
+    make
+    sudo make install all
 fi
 
 # Display messages in big font
