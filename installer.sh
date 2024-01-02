@@ -86,13 +86,14 @@ fi
 
 # Display messages in big font
 display_message() {
-    echo -e "\n\n"
-    echo "##################################################"
-    echo "#                                                #"
-    echo "#                 $1                 #"
-    echo "#                                                #"
-    echo "##################################################"
-    echo -e "\n\n"
+    local message="$1"
+    local width=50
+
+    echo -e "\n"
+    printf "%s\n" "$(printf '#%.0s' $(seq "$width"))"
+    printf "#%-*s#\n" "$width" "$message"
+    printf "%s\n" "$(printf '#%.0s' $(seq "$width"))"
+    echo -e "\n"
 }
 
 # Start message
