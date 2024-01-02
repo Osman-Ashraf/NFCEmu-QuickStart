@@ -9,7 +9,7 @@ spinner() {
     local current_frame=0
 
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
-        printf "\e[38;5;208m%s\e[0m " "${frames[$current_frame]}"
+        printf "\n\e[38;5;208m%s\e[0m " "${frames[$current_frame]}"
         current_frame=$(( (current_frame + 1) % frame_count ))
         sleep $delay
         printf "\b\b\b\b\b"
