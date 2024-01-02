@@ -4,21 +4,17 @@
 spinner() {
     local pid=$1
     local delay=0.1
-    local frames=("◐" "◓" "◑" "◒")
-    local colors=("96" "92" "93" "95" "91")
-    local color_idx=0
+    local spin_chars=("⣾" "⣷" "⣯" "⣟" "⡿" "⢿" "⣻" "⣽")
+    local spin_index=0
 
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
-        for frame in "${frames[@]}"; do
-            local color="\e[${colors[$color_idx]}m"
-            printf "${color}${frame} ${color}\b\b\b\b"
-            sleep $delay
-        done
-
-        color_idx=$(( (color_idx + 1) % ${#colors[@]} ))
+        printf "\e[38;5;208m%s\e[0m " "${spin_chars[$spin_index]}"
+        spin_index=$(( (spin_index + 1) % ${#spin_chars[@]} ))
+        sleep $delay
+        printf "\b\b\b\b"
     done
 
-    printf "    \b\b\b\b\e[0m"
+    printf "    \b\b\b\b"
 }
 
 # Check for internet connection
@@ -95,12 +91,12 @@ display_message() {
         box_bottom+="─"
     done
 
-    box_top+="╮"
-    box_bottom+="╯"
+    box_top+="-"
+    box_bottom+="-"
 
     echo -e "\n"
     echo -e "\e[38;5;208m$box_top\e[0m"
-    printf "\e[38;5;208m│ \e[1m%-$((${#msg} + 2))s\e[38;5;208m│\e[0m\n" "$msg"
+    printf "\e[38;5;208m│ \e[1m%-${#msg}s\e[38;5;208m \e[0m\n"
     echo -e "\e[38;5;208m$box_bottom\e[0m"
     echo -e "\n"
 }
