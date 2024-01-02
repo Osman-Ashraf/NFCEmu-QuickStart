@@ -4,7 +4,7 @@
 spinner() {
     local pid=$1
     local delay=0.05
-    local frames=("■□□□" "□■□□" "□□■□" "□□□■" "□□■■" "□■■□" "■■□□")
+    local frames=("■□□□" "□■□□" "□□■□" "□□□■")
     local frame_count=${#frames[@]}
     local current_frame=0
 
@@ -12,10 +12,10 @@ spinner() {
         printf "\e[38;5;208m%s\e[0m " "${frames[$current_frame]}"
         current_frame=$(( (current_frame + 1) % frame_count ))
         sleep $delay
-        printf "\b\b\b\b"
+        printf "\b\b\b\b\b"
     done
 
-    printf "        \b\b\b\b\b\b\b\b\b\b"
+    printf "      \b\b\b\b\b"
 }
 
 # Check for internet connection
