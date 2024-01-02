@@ -3,18 +3,19 @@
 # Spinner animation
 spinner() {
     local pid=$1
-    local delay=0.1
-    local spin_chars=("⣾" "⣷" "⣯" "⣟" "⡿" "⢿" "⣻" "⣽")
-    local spin_index=0
+    local delay=0.05
+    local frames=("■□□□" "□■□□" "□□■□" "□□□■" "□□■■" "□■■□" "■■□□")
+    local frame_count=${#frames[@]}
+    local current_frame=0
 
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
-        printf "\e[38;5;208m%s\e[0m " "${spin_chars[$spin_index]}"
-        spin_index=$(( (spin_index + 1) % ${#spin_chars[@]} ))
+        printf "\e[38;5;208m%s\e[0m " "${frames[$current_frame]}"
+        current_frame=$(( (current_frame + 1) % frame_count ))
         sleep $delay
-        printf "\b\b\b\b"
+        printf "\b\b\b\b\b"
     done
 
-    printf "    \b\b\b\b"
+    printf "      \b\b\b\b\b"
 }
 
 # Check for internet connection
@@ -96,7 +97,7 @@ display_message() {
 
     echo -e "\n"
     echo -e "\e[38;5;208m$box_top\e[0m"
-    printf "\e[38;5;208m│ \e[1m%-${#msg}s\e[38;5;208m \e[0m\n"
+    printf "\e[38;5;208m│ \e[1m%-${#msg}s\e[38;5;208m \e[0m\n" "$msg"
     echo -e "\e[38;5;208m$box_bottom\e[0m"
     echo -e "\n"
 }
