@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# wait 3 seconds before running application
-sleep 3
 # Define paths
 BASE_DIR=~/NFCEmu
 GUI_DIR="${BASE_DIR}/NFC-TerminalGUI-main/NFCD_GUI"
