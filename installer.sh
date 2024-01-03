@@ -92,6 +92,14 @@ else
     log_info "Enabling the SPI interface on Pi..."
     sudo raspi-config nonint do_spi 0
 
+    # Define the command to be added to autostart
+    AUTOSTART_COMMAND="@bash /home/pie/NFCEmu/run.sh"
+
+    # Add the command to the end of autostart file
+    log_info "Adding the script to autostart file"
+    echo "$AUTOSTART_COMMAND" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
+
+
     # Clone the libnfc repository
     log_info "Cloning the libnfc repo..."
     cd ~
