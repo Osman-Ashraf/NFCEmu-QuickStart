@@ -211,11 +211,21 @@ log_info "run script make completed."
 if [ "$UPDATE" = true ]; then
     display_message "NFCEmulator Updated"
 
-    log_info "Removing unnecessary zip files in ${BASE_DIR}"
+    log_info "Cleaning installation files in ${BASE_DIR}"
     rm -rf $BASE_DIR/*.zip
 else
     display_message "NFCEmulator Installed"
 
-    log_info "Removing unnecessary zip files in ${BASE_DIR}"
+    log_info "Cleaning installation files in ${BASE_DIR}"
     rm -rf $BASE_DIR/*.zip
+fi
+
+# Ask the user to reboot
+read -p "Do you want to reboot the Raspberry Pi now? (y/n): " answer
+
+# Check the user's response
+if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+    sudo reboot
+else
+    log_error "You chose not to reboot. Please reboot the Raspberry Pi manually to complete the setup!"
 fi
