@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="artwork/nfcemul.png" alt="Project logo"></a>
+ <img width=946px height=591px src="artwork/artwork_nfc.png" alt="Project Feature Graphic"></a>
 </p>
 
 <h3 align="center">NFCEmu-QuickStart</h3>
@@ -57,13 +57,16 @@ How to [Get a GitHub Personal Access Token](https://help.github.com/articles/cre
 
 ## ⚡ Circuit Configuration <a name = "circuit"></a>
 
-- Make sure the PN532 Module is in SPI mode. If not, set it in SPI mode by setting the switches in following configuration.
-  
-- Connect the NXP PN532 Module pins to the Raspberry Pi GPIO pins as shown below.
+1. Make sure the PN532 Module is in SPI mode. If not, set it in SPI mode by setting the switches in following configuration.
+	<p align="center">
+		<a href="" rel="noopener">
+ 		<img width=800px height=310px src="artwork/pn532-spi.jpg" alt="PN532 SPI Config Image"></a>
+	</p>
+2. Connect the NXP PN532 Module pins to the Raspberry Pi GPIO pins as shown below.
 
-- Connect the HDMI display to Raspberry Pi and keyboard/mouse (optional).
+3. Connect the HDMI display to Raspberry Pi and keyboard/mouse (optional).
 
-- Power up the Raspberry Pi.
+4. Power up the Raspberry Pi.
 
 ## ⬇ Installation and Update <a name = "Installation_n_update"></a>
 
