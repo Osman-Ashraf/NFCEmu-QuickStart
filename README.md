@@ -44,7 +44,8 @@ These instructions will get you a copy of the project up and running on your Ras
 - Power Supply for Raspberry Pi
 - NXP PN532 RFID Module
 - Connecting Wires
-- HDMI Display (HDMI to micro-HDMI cable required for Pi 4, 4B, 5)
+- HDMI Display
+- HDMI Cable (HDMI to micro-HDMI cable required for Pi 4, 4B, 5)
 ```
 
 #### Software Requirements
@@ -63,7 +64,10 @@ How to [Get a GitHub Personal Access Token](https://help.github.com/articles/cre
  		<img width=800px height=310px src="artwork/pn532-spi.jpg" alt="PN532 SPI Config Image"></a>
 	</p>
 2. Connect the NXP PN532 Module pins to the Raspberry Pi GPIO pins as shown below.
-
+	<p align="center">
+		<a href="" rel="noopener">
+ 		<img width=2064px height=1594px src="artwork/wiring.png" alt="PN532 connections with Pi"></a>
+	</p>
 3. Connect the HDMI display to Raspberry Pi and keyboard/mouse (optional).
 
 4. Power up the Raspberry Pi.
