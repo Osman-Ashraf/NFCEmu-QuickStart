@@ -144,7 +144,6 @@ create_and_start_terminal_service() {
     
         # Enable the service
         sudo systemctl enable --now nfcterminal.service
-        sudo systemctl status nfcterminal.service
     
     fi
 }
