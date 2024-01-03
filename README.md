@@ -20,6 +20,7 @@
 - [About](#about)
 - [Getting Started](#getting_started)
 - [Prerequisites](#prerequisites)
+- [Circuit Configuration](#circuit)
 - [Installation and Update](#Installation_n_update)
 - [Run](#run)
 - [Built Using](#built_using)
@@ -33,22 +34,38 @@ This repository contains the installer setup for quick setup of NFC Terminal app
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your Raspberry Pi/local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your Raspberry Pi for testing and deployment purpose.
 
-### Prerequisites <a name = "prerequisites"></a>
+## Prerequisites <a name = "prerequisites"></a>
 
-What things you need to install the software and how to install them.
-
+#### Hardware Requirements
 ```
 - Raspberry Pi Model 3B, 3B+, 4B or CM4 (with Internet Connection)
-- Raspberry Pi OS (64-bit)
+- Power Supply for Raspberry Pi
+- NXP PN532 RFID Module
+- Connecting Wires
+- HDMI Display (HDMI to micro-HDMI cable required for Pi 4, 4B, 5)
+```
+
+#### Software Requirements
+```
+- Raspberry Pi OS (64-bit) -> installed on a micro-SD Card
 - Github Personal Access Token
 ```
 
-- Get a [GitHub Personal Access Token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
+How to [Get a GitHub Personal Access Token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)?
 
+## ⚡ Circuit Configuration <a name = "circuit"></a>
 
-## Installation and Update <a name = "Installation_n_update"></a>
+- Make sure the PN532 Module is in SPI mode. If not, set it in SPI mode by setting the switches in following configuration.
+  
+- Connect the NXP PN532 Module pins to the Raspberry Pi GPIO pins as shown below.
+
+- Connect the HDMI display to Raspberry Pi and keyboard/mouse (optional).
+
+- Power up the Raspberry Pi.
+
+## ⬇ Installation and Update <a name = "Installation_n_update"></a>
 
 - Once you have the GitHub Personal Access Token execute the following command on the terminal
 
@@ -62,7 +79,7 @@ wget -O -  https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/ali-
 ```
 ## ⛏️ Run <a name = "run"></a>
 
-1.  The program can be run using the following command
+1.  The program can be run using the following command.
 ```bash
 cd ~/NFCEmu
 ./run.sh
