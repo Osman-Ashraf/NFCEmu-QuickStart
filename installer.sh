@@ -43,11 +43,10 @@ display_message() {
 
 log_info() {
     local msg="$1"
-    blue=$(tput setaf 4)  # ANSI code for orange
+    green=$(tput setaf 2)  # ANSI code for orange
     reset=$(tput sgr0)
 
-    echo -e "\n"
-    printf "{$blue}⫸ %s{$reset}\n" "$msg"
+    printf "$green※ %s$reset\n" "$msg"
 }
 
 log_error() {
@@ -55,8 +54,7 @@ log_error() {
     red=$(tput setaf 1)  # ANSI code for orange
     reset=$(tput sgr0)
 
-    echo -e "\n"
-    printf "{$red}⫸ %s{$reset}\n" "$msg"
+    printf "$red※ %s$reset\n" "$msg"
 }
 
 # Check for internet connection
