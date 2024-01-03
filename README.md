@@ -66,7 +66,7 @@ How to [Get a GitHub Personal Access Token](https://help.github.com/articles/cre
 2. Connect the NXP PN532 Module pins to the Raspberry Pi GPIO pins as shown below.
 	<p align="center">
 		<a href="" rel="noopener">
- 		<img width=797px height=1032px src="artwork/wiring.png" alt="PN532 connections with Pi"></a>
+ 		<img width=531px height=688px src="artwork/wiring.png" alt="PN532 connections with Pi"></a>
 	</p>
 3. Connect the HDMI display to Raspberry Pi and keyboard/mouse (optional).
 
