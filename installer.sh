@@ -57,6 +57,15 @@ log_error() {
     printf "$red※ %s$reset\n" "$msg"
 }
 
+reboot_five() {
+    local delay=1
+    for ((i = 4; i > 0; i--)); do
+        echo "$red Rebooting in $i...$reset"
+    done
+
+    sudo reboot
+}
+
 # Check for internet connection
 if ! ping -c 1 8.8.8.8 &>/dev/null; then
     log_error "No internet connection. Please check your connection and try again."
@@ -220,13 +229,5 @@ else
     rm -rf $BASE_DIR/*.zip
 fi
 
-# Ask the user to reboot
-echo -n "Do you want to reboot the Raspberry Pi now? (y/n): "
-read answer
-
-# Check the user's response
-if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
-    sudo reboot
-else
-    log_error "You chose not to reboot. Please reboot the Raspberry Pi manually to complete the setup!"
-fi
+# Perform a reboot
+reboot_five
