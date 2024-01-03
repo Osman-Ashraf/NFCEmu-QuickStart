@@ -57,6 +57,98 @@ log_error() {
     printf "$red※ %s$reset\n" "$msg"
 }
 
+create_reboot_service() {
+    # Define the path to the service file
+    SERVICE_FILE="/lib/systemd/system/rebootbinary.service"
+
+    # Check if the service file already exists
+    if [ -e "$SERVICE_FILE" ]; then
+        echo "The service file already exists: $SERVICE_FILE"
+    else
+        # Create the service file
+        echo "# /lib/systemd/system/rebootbinary.service" | sudo tee "$SERVICE_FILE" > /dev/null
+        echo "" | sudo tee -a "$SERVICE_FILE" > /dev/null
+        echo "[Unit]" | sudo tee -a "$SERVICE_FILE" > /dev/null
+        echo "Description=Reboot Binary Service" | sudo tee -a "$SERVICE_FILE" > /dev/null
+        echo "" | sudo tee -a "$SERVICE_FILE" > /dev/null
+        echo "[Service]" | sudo tee -a "$SERVICE_FILE" > /dev/null
+        echo "Type=oneshot" | sudo tee -a "$SERVICE_FILE" > /dev/null
+        echo "ExecStart=/home/pie/NFCEmu/reboot.sh" | sudo tee -a "$SERVICE_FILE" > /dev/null
+        echo "User=pie" | sudo tee -a "$SERVICE_FILE" > /dev/null
+    
+        log_info "Service file created: $SERVICE_FILE"
+    fi
+}
+
+create_reboot_timer() {
+    TIMER_FILE="/lib/systemd/system/rebootbinary.timer"
+
+    # Check if the timer file already exists
+    if [ -e "$TIMER_FILE" ]; then
+        echo "The timer file already exists: $TIMER_FILE"
+    else
+        # Create the timer file
+        echo "# /lib/systemd/system/rebootbinary.timer" | sudo tee "$TIMER_FILE" > /dev/null
+        echo "" | sudo tee -a "$TIMER_FILE" > /dev/null
+        echo "[Unit]" | sudo tee -a "$TIMER_FILE" > /dev/null
+        echo "Description=Reboot pi at 2 am daily" | sudo tee -a "$TIMER_FILE" > /dev/null
+        echo "" | sudo tee -a "$TIMER_FILE" > /dev/null
+        echo "[Timer]" | sudo tee -a "$TIMER_FILE" > /dev/null
+        echo "Unit=rebootbinary.service" | sudo tee -a "$TIMER_FILE" > /dev/null
+        echo "OnCalendar=*-*-* 02:00:00" | sudo tee -a "$TIMER_FILE" > /dev/null
+        echo "" | sudo tee -a "$TIMER_FILE" > /dev/null
+        echo "[Install]" | sudo tee -a "$TIMER_FILE" > /dev/null
+        echo "WantedBy=timers.target" | sudo tee -a "$TIMER_FILE" > /dev/null
+    
+        log_info "Timer file created: $TIMER_FILE"
+    
+        # Reload systemd daemons
+        sudo systemctl daemon-reload
+    
+        # Enable the timer
+        sudo systemctl enable rebootbinary.timer
+    
+        # Start the timer
+        sudo systemctl start rebootbinary.timer
+    fi
+}
+
+create_and_start_terminal_service() {
+    # Define the path to the service file
+    TERMINAL_SERVICE_FILE="/lib/systemd/system/nfcterminal.service"
+
+    # Check if the service file already exists
+    if [ -e "$TERMINAL_SERVICE_FILE" ]; then
+        echo "The service file already exists: $TERMINAL_SERVICE_FILE"
+    else
+        # Create the service file
+        echo "# /lib/systemd/system/nfcterminal.service" | sudo tee "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "[Unit]" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "Description=NFC Terminal run sh Service" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "StartLimitIntervalSec=0" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "[Service]" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "Restart=always" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "RestartSec=2" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "User=pie" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "ExecStart=/home/pie/NFCEmu/run.sh" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "[Install]" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "WantedBy=multi-user.target" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+    
+        log_info "Service file created: $TERMINAL_SERVICE_FILE"
+    
+        # Reload systemd daemons
+        sudo systemctl daemon-reload
+    
+        # Enable the service
+        sudo systemctl enable --now nfcterminal.service
+        sudo systemctl status nfcterminal.service
+    
+    fi
+}
+
 reboot_five() {
     local delay=1
     for ((i = 4; i > 0; i--)); do
@@ -102,21 +194,7 @@ else
     log_info "Enabling the SPI interface on Pi..."
     sudo raspi-config nonint do_spi 0
 
-    # Define the command to be added to autostart
-    AUTOSTART_COMMAND="@lxterminal -e bash /home/pie/NFCEmu/run.sh"
-
-    # Path to autostart file
-    AUTOSTART_FILE="/etc/xdg/lxsession/LXDE-pi/autostart"
     
-    # Check if the command already exists in autostart file
-    if grep -Fxq "$AUTOSTART_COMMAND" "$AUTOSTART_FILE"; then
-        log_info "The command already exists in the autostart file."
-    else
-        # Add the command to the end of autostart file
-        log_info "Adding the script to autostart file"
-        echo "$AUTOSTART_COMMAND" | sudo tee -a "$AUTOSTART_FILE"
-    fi
-
 
     # Clone the libnfc repository
     log_info "Cloning the libnfc repo..."
@@ -224,6 +302,15 @@ wait
 log_info "Making the run script..."
 chmod +x run.sh
 log_info "run script make completed."
+wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/ali-yasir-binairy-patch-1/reboot.sh -O ${BASE_DIR}/reboot.sh 
+wait
+log_info "Making the reboot script..."
+chmod +x run.sh
+log_info "reboot script make completed."
+
+create_and_start_terminal_service
+create_reboot_service
+create_reboot_timer
 
 # End message
 if [ "$UPDATE" = true ]; then
