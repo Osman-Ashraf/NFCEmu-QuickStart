@@ -114,38 +114,19 @@ create_reboot_timer() {
 }
 
 create_and_start_terminal_service() {
-    # Define the path to the service file
-    TERMINAL_SERVICE_FILE="/lib/systemd/system/nfcterminal.service"
-
-    # Check if the service file already exists
-    if [ -e "$TERMINAL_SERVICE_FILE" ]; then
-        echo "The service file already exists: $TERMINAL_SERVICE_FILE"
+    # Define the statement to check for
+    STATEMENT="@bash /home/pie/NFCEmu/run.sh"
+    
+    # Define the path to the .bashrc file
+    BASHRC_FILE="/home/pie/.bashrc"
+    
+    # Check if the statement already exists in .bashrc
+    if grep -q "$STATEMENT" "$BASHRC_FILE"; then
+        echo "The statement already exists in $BASHRC_FILE."
     else
-        # Create the service file
-        echo "# /lib/systemd/system/nfcterminal.service" | sudo tee "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "[Unit]" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "Description=NFC Terminal run sh Service" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "After=graphical.target" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "StartLimitIntervalSec=0" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "[Service]" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "Restart=always" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "RestartSec=2" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "User=pie" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "ExecStart=/home/pie/NFCEmu/run.sh" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "[Install]" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-        echo "WantedBy=multi-user.target" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
-    
-        log_info "Service file created: $TERMINAL_SERVICE_FILE"
-    
-        # Reload systemd daemons
-        sudo systemctl daemon-reload
-    
-        # Enable the service
-        sudo systemctl enable --now nfcterminal.service
-    
+        # Append the statement to .bashrc
+        echo "$STATEMENT" >> "$BASHRC_FILE"
+        echo "The statement has been appended to $BASHRC_FILE."
     fi
 }
 
