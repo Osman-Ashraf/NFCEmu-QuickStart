@@ -19,10 +19,11 @@
 
 - [About](#about)
 - [Getting Started](#getting_started)
-- [Prerequisites](#deployment)
-- [Installation and Config](#Installation_and_Config)
-- [Test](#test)
+- [Prerequisites](#prerequisites)
+- [Installation and Update](#Installation_n_update)
+- [Run](#run)
 - [Built Using](#built_using)
+- [Tested On](#tested_on)
 - [Authors](#authors)
 - [Contributors](#contributors)
 
@@ -34,7 +35,7 @@ This repository contains the installer setup for quick setup of NFC Terminal app
 
 These instructions will get you a copy of the project up and running on your Raspberry Pi/local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
-### Prerequisites <a name = "Prerequisites"></a>
+### Prerequisites <a name = "prerequisites"></a>
 
 What things you need to install the software and how to install them.
 
@@ -47,7 +48,7 @@ What things you need to install the software and how to install them.
 - Get a [GitHub Personal Access Token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
 
 
-## Installation and Update <a name = "Installation_and_Config"></a>
+## Installation and Update <a name = "Installation_n_update"></a>
 
 - Once you have the GitHub Personal Access Token execute the following command on the terminal
 
@@ -59,7 +60,7 @@ You will need to run the following command in order to install or update the NFC
 ```bash
 wget -O -  https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/ali-yasir-binairy-patch-1/installer.sh | bash
 ```
-## ⛏️ Running <a name = "test"></a>
+## ⛏️ Run <a name = "run"></a>
 
 1.  The program can be run using the following command
 ```bash
@@ -71,6 +72,13 @@ cd ~/NFCEmu
 
 - [Python3](https://www.python.org/) - Raspberry Pi Firmware
 - Bash
+
+## 🔍 Tested On <a name = "tested_on"></a>
+
+- Raspberry Pi 4B 8GB
+- Raspberry Pi OS (without recommended software) 64 bit
+- NXP PN532 Module
+- 7" HDMI Touch Display (800×480)
 
 ## ✍️ Authors <a name = "authors"></a>
 
