@@ -126,6 +126,7 @@ create_and_start_terminal_service() {
         echo "" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
         echo "[Unit]" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
         echo "Description=NFC Terminal run sh Service" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
+        echo "After=graphical.target" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
         echo "StartLimitIntervalSec=0" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
         echo "" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
         echo "[Service]" | sudo tee -a "$TERMINAL_SERVICE_FILE" > /dev/null
