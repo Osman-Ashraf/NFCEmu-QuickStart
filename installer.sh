@@ -221,7 +221,8 @@ else
 fi
 
 # Ask the user to reboot
-read -p "Do you want to reboot the Raspberry Pi now? (y/n): " answer
+echo -n "Do you want to reboot the Raspberry Pi now? (y/n): "
+read answer
 
 # Check the user's response
 if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
