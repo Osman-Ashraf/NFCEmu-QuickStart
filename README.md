@@ -80,7 +80,9 @@ How to [Get a GitHub Personal Access Token](https://help.github.com/articles/cre
 export TOKEN=REPLACE_WITH_GITHUB_PERSONAL_ACCESS_TOKEN
 ```
 
-You will need to run the following command in order to install or update the NFCEmu
+You will need to run the following command in order to install or update the NFCEmu.
+
+***⚠ Warning: Save and close any opened files before running the following script. The system may automatically restart during the process.***
 ```bash
 wget -O -  https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/ali-yasir-binairy-patch-1/installer.sh | bash
 ```
