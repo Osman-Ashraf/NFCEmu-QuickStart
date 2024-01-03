@@ -103,11 +103,19 @@ else
     sudo raspi-config nonint do_spi 0
 
     # Define the command to be added to autostart
-    AUTOSTART_COMMAND="@bash /home/pie/NFCEmu/run.sh"
+    AUTOSTART_COMMAND="@lxterminal -e bash /home/pie/NFCEmu/run.sh"
 
-    # Add the command to the end of autostart file
-    log_info "Adding the script to autostart file"
-    echo "$AUTOSTART_COMMAND" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
+    # Path to autostart file
+    AUTOSTART_FILE="/etc/xdg/lxsession/LXDE-pi/autostart"
+    
+    # Check if the command already exists in autostart file
+    if grep -Fxq "$AUTOSTART_COMMAND" "$AUTOSTART_FILE"; then
+        log_info "The command already exists in the autostart file."
+    else
+        # Add the command to the end of autostart file
+        log_info "Adding the script to autostart file"
+        echo "$AUTOSTART_COMMAND" | sudo tee -a "$AUTOSTART_FILE"
+    fi
 
 
     # Clone the libnfc repository
