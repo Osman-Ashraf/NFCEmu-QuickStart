@@ -61,6 +61,7 @@ reboot_five() {
     local delay=1
     for ((i = 4; i > 0; i--)); do
         echo "$red Rebooting in $i...$reset"
+        sleep $delay
     done
 
     sudo reboot
