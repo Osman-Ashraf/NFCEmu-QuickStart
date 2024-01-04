@@ -114,20 +114,10 @@ create_reboot_timer() {
 }
 
 create_and_start_terminal_service() {
-    # Define the statement to check for
-    STATEMENT="@bash /home/pie/NFCEmu/run.sh"
-    
-    # Define the path to the .bashrc file
-    BASHRC_FILE="/home/pie/.bashrc"
-    
-    # Check if the statement already exists in .bashrc
-    if grep -q "$STATEMENT" "$BASHRC_FILE"; then
-        echo "The statement already exists in $BASHRC_FILE."
-    else
-        # Append the statement to .bashrc
-        echo "$STATEMENT" >> "$BASHRC_FILE"
-        echo "The statement has been appended to $BASHRC_FILE."
-    fi
+    # TODO
+    # TODO
+    # TODO
+    # TODO
 }
 
 reboot_five() {
