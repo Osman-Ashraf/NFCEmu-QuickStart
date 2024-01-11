@@ -136,8 +136,38 @@ if [[ -z "${TOKEN}" ]]; then
     exit 1
 fi
 
+# ---------------------------------------------------------------
+# --------------------- Create a kiosk user ---------------------
+# ---------------------------------------------------------------
+
+# Define the username
+username="kiosk"
+password="kiosk"
+
+# Check if the user already exists
+if id "$username" &>/dev/null; then
+    log_info "User '$username' already exists."
+else
+    # Create the user
+    sudo useradd "$username"
+    
+    # Set a password for the user
+    sudo passwd "$username"
+    echo "$username:$password" | sudo chpasswd
+    
+    log_info "User '$username' created successfully."
+fi
+
+sudo mkdir /home/kiosk/kiosk_app
+
+sudo chown -R kiosk:kiosk /home/kiosk/kiosk_app
+
+
 # Base directory
 BASE_DIR=~/NFCEmu
+
+# Define the files paths
+lightdm_conf="/etc/lightdm/lightdm.conf"
 
 # Check if it's a fresh install or an update
 if [[ -d "${BASE_DIR}/NFC-TerminalGUI-main" && -d "${BASE_DIR}/NFCEmulator-1-main" ]]; then
@@ -193,6 +223,10 @@ else
     make
     sudo make install all
 fi
+
+# Use sed to replace the autologin-user property
+sudo sed -i 's/^autologin-user=.*/autologin-user=kiosk/' "$lightdm_conf"
+log_info "autologin-user property in $lightdm_conf has been set to 'kiosk'."
 
 # Start message
 if [ "$UPDATE" = true ]; then
