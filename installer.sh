@@ -113,12 +113,12 @@ create_reboot_timer() {
     fi
 }
 
-create_and_start_terminal_service() {
+# create_and_start_terminal_service() {
     # TODO
     # TODO
     # TODO
     # TODO
-}
+# }
 
 reboot_five() {
     local delay=1
