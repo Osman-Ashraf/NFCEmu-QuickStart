@@ -60,7 +60,7 @@ log_error() {
 create_nfc_app_service() {
     # Service file content
     SERVICE_CONTENT="[Unit]
-    Description=pi-plate
+    Description=nfc-app
     Wants=graphical.target
     After=graphical.target
     
@@ -87,10 +87,10 @@ create_nfc_app_service() {
     sudo systemctl daemon-reload
     
     # Enable the service to start on boot
-    sudo systemctl enable pi-plate
+    sudo systemctl enable nfc-app
     
     # Display service status
-    sudo systemctl status pi-plate
+    sudo systemctl status nfc-app
 
 }
 
