@@ -97,4 +97,6 @@ echo "Socket server started."
 echo "Starting C++ program..."
 "$CPP_PROGRAM_PATH"
 
+unclutter -idle 0.01
+
 echo "All programs have been executed."
