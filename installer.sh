@@ -57,6 +57,43 @@ log_error() {
     printf "$red※ %s$reset\n" "$msg"
 }
 
+create_nfc_app_service() {
+    # Service file content
+    SERVICE_CONTENT="[Unit]
+    Description=pi-plate
+    Wants=graphical.target
+    After=graphical.target
+    
+    [Service]
+    Environment=DISPLAY=:0.0
+    Environment=XAUTHORITY=/home/pi/.Xauthority
+    Type=simple
+    ExecStart=/bin/bash /home/kiosk/kiosk_app/run.sh
+    Restart=on-abort
+    User=kiosk
+    Group=kiosk
+    
+    [Install]
+    WantedBy=graphical.target"
+    
+    # File paths
+    SERVICE_FILE="/etc/systemd/system/nfc-app.service"
+    SCRIPT_PATH="/home/kiosk/kiosk_app/run.sh"
+    
+    # Create the service file
+    echo "$SERVICE_CONTENT" | sudo tee "$SERVICE_FILE" > /dev/null
+    
+    # Reload systemd
+    sudo systemctl daemon-reload
+    
+    # Enable the service to start on boot
+    sudo systemctl enable pi-plate
+    
+    # Display service status
+    sudo systemctl status pi-plate
+
+}
+
 create_reboot_service() {
     # Define the path to the service file
     SERVICE_FILE="/lib/systemd/system/rebootbinary.service"
@@ -316,6 +353,8 @@ else
     log_info "Cleaning installation files in ${BASE_DIR}"
     rm -rf $BASE_DIR/*.zip
 fi
+
+create_nfc_app_service
 
 # Perform a reboot
 reboot_five
