@@ -184,7 +184,7 @@ else
     sudo apt-get upgrade -y
 
     # Install necessary packages
-    sudo apt-get install -y git autoconf libtool libusb-dev
+    sudo apt-get install -y git autoconf libtool libusb-dev unclutter
 
     # Enable SPI interface using raspi-config
     log_info "Enabling the SPI interface on Pi..."
