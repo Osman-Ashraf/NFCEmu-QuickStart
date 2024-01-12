@@ -66,7 +66,7 @@ create_nfc_app_service() {
     
     [Service]
     Environment=DISPLAY=:0.0
-    Environment=XAUTHORITY=/home/pi/.Xauthority
+    Environment=XAUTHORITY=/home/admin/.Xauthority
     Type=simple
     ExecStart=/bin/bash /home/kiosk/kiosk_app/run.sh
     Restart=on-abort
