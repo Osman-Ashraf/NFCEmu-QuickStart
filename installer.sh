@@ -116,8 +116,10 @@ create_reboot_timer() {
 
 reboot_five() {
     local delay=1
+    printf "$red Rebooting in 5...$reset"
     for ((i = 4; i > 0; i--)); do
-        echo "$red Rebooting in $i...$reset"
+        printf "\b\b\b\b"
+        printf "$red$i...$reset"
         sleep $delay
     done
 
@@ -164,7 +166,7 @@ sudo chown -R kiosk:kiosk /home/kiosk/kiosk_app
 
 
 # Base directory
-BASE_DIR=~/NFCEmu
+BASE_DIR=/home/kiosk/kiosk_app
 
 # Define the files paths
 lightdm_conf="/etc/lightdm/lightdm.conf"
@@ -176,10 +178,9 @@ if [[ -d "${BASE_DIR}/NFC-TerminalGUI-main" && -d "${BASE_DIR}/NFCEmulator-1-mai
 else
     log_info "Performing a Fresh Install."
     UPDATE=false
+    
     # Update the package list
     sudo apt-get update
-
-    # Upgrade installed packages
     sudo apt-get upgrade -y
 
     # Install necessary packages
@@ -189,17 +190,13 @@ else
     log_info "Enabling the SPI interface on Pi..."
     sudo raspi-config nonint do_spi 0
 
-    
-
     # Clone the libnfc repository
     log_info "Cloning the libnfc repo..."
     cd ~
     git clone https://github.com/nfc-tools/libnfc
 
-    # Navigate to the libnfc directory
+    # Navigate to the libnfc directory and create the /etc/nfc directory
     cd libnfc
-
-    # Create the /etc/nfc directory if it doesn't exist
     sudo mkdir -p /etc/nfc
 
     log_info "Adding NFC configuration to libnfc.conf..."
@@ -260,9 +257,9 @@ download_and_extract() {
     # rm "${output_zip}"  # Remove the downloaded zip file
 }
 
-# Download and extract repositories in parallel
-download_and_extract "https://github.com/Osman-Ashraf/NFC-TerminalGUI/archive/refs/heads/main.zip" "NFC-TerminalGUI" &
-download_and_extract "https://github.com/Osman-Ashraf/NFCEmulator-1/archive/refs/heads/main.zip" "NFCEmulator-1-main" &
+# Download and extract repositories
+download_and_extract "https://github.com/Osman-Ashraf/NFC-TerminalGUI/archive/refs/heads/main.zip" "NFC-TerminalGUI"
+download_and_extract "https://github.com/Osman-Ashraf/NFCEmulator-1/archive/refs/heads/main.zip" "NFCEmulator-1-main"
 
 # Wait for both downloads to complete
 wait
@@ -306,10 +303,6 @@ wait
 log_info "Making the reboot script..."
 chmod +x run.sh
 log_info "reboot script make completed."
-
-create_and_start_terminal_service
-create_reboot_service
-create_reboot_timer
 
 # End message
 if [ "$UPDATE" = true ]; then
