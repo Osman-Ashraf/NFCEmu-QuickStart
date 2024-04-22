@@ -304,6 +304,10 @@ download_and_extract "https://github.com/Osman-Ashraf/NFCEmulator-1/archive/refs
 wait
 
 # Clean up and setup NFC-TerminalGUI
+su "$username"<<EOF
+kiosk
+EOF
+
 cd "${BASE_DIR}/NFC-TerminalGUI-main" || exit
 shopt -s extglob  # Enable extended globbing
 rm -rf !("NFCD_GUI")
