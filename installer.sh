@@ -211,7 +211,7 @@ log_info "android_hce script make completed."
 
 # Get run script
 cd ${BASE_DIR} || exit
-wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/ali-yasir-binairy-patch-1/run.sh -O ${BASE_DIR}/run.sh 
+wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/alpha/run.sh -O ${BASE_DIR}/run.sh 
 wait
 log_info "Making the run script..."
 chmod +x run.sh
