@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define paths
-BASE_DIR=~/NFCEmu
+BASE_DIR=~/kiosk_app
 GUI_DIR="${BASE_DIR}/NFC-TerminalGUI-main/NFCD_GUI"
 GUI_PATH="${GUI_DIR}/ui_cutie.py"
 CPP_PROGRAM_PATH="${BASE_DIR}/NFCEmulator-1-main/Firmware/RPi_AndroidHCE/android_hce"
