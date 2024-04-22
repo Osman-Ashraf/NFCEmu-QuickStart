@@ -82,7 +82,7 @@ export TOKEN=REPLACE_WITH_GITHUB_PERSONAL_ACCESS_TOKEN
 
 You will need to run the following command in order to install or update the NFCEmu
 ```bash
-wget -O -  https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/ali-yasir-binairy-patch-1/installer.sh | bash
+wget -O -  https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/alpha/installer.sh | bash
 ```
 ## ⛏️ Run <a name = "run"></a>
 
