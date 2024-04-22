@@ -282,7 +282,7 @@ download_and_extract() {
 
     # Download the repository
     log_info "Downloading the ${folder_name} repo..."
-    curl -s -H "Authorization: token ${TOKEN}" -L "${repo_url}" -o "${output_zip}" &
+    sudo -u kiosk curl -s -H "Authorization: token ${TOKEN}" -L "${repo_url}" -o "${output_zip}" &
 
     # Start the spinner animation
     spinner $! &
@@ -292,7 +292,7 @@ download_and_extract() {
 
     # Extract the repository
     log_info "Extracting the ${folder_name}.zip..."
-    unzip -o -q "${output_zip}" -d "${BASE_DIR}"
+    sudo -u kiosk unzip -o -q "${output_zip}" -d "${BASE_DIR}"
     # rm "${output_zip}"  # Remove the downloaded zip file
 }
 
