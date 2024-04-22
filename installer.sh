@@ -231,7 +231,7 @@ else
 
     # Clone the libnfc repository
     log_info "Cloning the libnfc repo..."
-    cd ~
+    cd /home/kiosk
     git clone https://github.com/nfc-tools/libnfc
 
     # Navigate to the libnfc directory and create the /etc/nfc directory
