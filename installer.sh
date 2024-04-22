@@ -188,7 +188,7 @@ if id "$username" &>/dev/null; then
     log_info "User '$username' already exists."
 else
     # Create the user
-    sudo useradd "$username"
+    sudo adduser "$username"
     
     # Set a password for the user
     sudo passwd "$username"
