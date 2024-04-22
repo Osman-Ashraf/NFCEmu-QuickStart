@@ -304,11 +304,11 @@ download_and_extract "https://github.com/Osman-Ashraf/NFCEmulator-1/archive/refs
 wait
 
 # Clean up and setup NFC-TerminalGUI
-su "$username" -c '
+su - "$username" -c '
 # Commands to be executed as the specified user
 # For example, entering a password
 echo "kiosk"
-'
+' 2>&1 >> /tmp/su_error.log
 
 cd "${BASE_DIR}/NFC-TerminalGUI-main" || exit
 shopt -s extglob  # Enable extended globbing
