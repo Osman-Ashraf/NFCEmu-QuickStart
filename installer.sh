@@ -304,12 +304,9 @@ download_and_extract "https://github.com/Osman-Ashraf/NFCEmulator-1/archive/refs
 wait
 
 # Clean up and setup NFC-TerminalGUI
-su - "$username" -c '
-# Commands to be executed as the specified user
-# For example, entering a password
-echo "kiosk"
-' 2>&1 >> /tmp/su_error.log
 
+# Switch to the specified user and execute the commands
+echo "$password" | sudo -S -u "$username" bash <<EOF
 cd "${BASE_DIR}/NFC-TerminalGUI-main" || exit
 shopt -s extglob  # Enable extended globbing
 rm -rf !("NFCD_GUI")
@@ -318,7 +315,7 @@ cd NFCD_GUI || exit
 # Check if requirements are already installed
 if ! pip3 freeze | grep -q -f requirements.txt; then
     pip3 install -r requirements.txt &
-    spinner $! &
+    spinner \$! &
     wait
 fi
 
@@ -331,10 +328,9 @@ rm -rf !("RPi_AndroidHCE")
 cd RPi_AndroidHCE || exit
 log_info "Making the android_hce script..."
 make all & 
-spinner $! &
+spinner \$! &
 wait
 log_info "android_hce script make completed."
-
 
 # Get run script
 cd ${BASE_DIR} || exit
@@ -346,7 +342,7 @@ log_info "run script make completed."
 wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/ali-yasir-binairy-patch-1/reboot.sh -O ${BASE_DIR}/reboot.sh 
 wait
 log_info "Making the reboot script..."
-chmod +x run.sh
+chmod +x reboot.sh
 log_info "reboot script make completed."
 
 # End message
@@ -361,6 +357,7 @@ else
     log_info "Cleaning installation files in ${BASE_DIR}"
     rm -rf $BASE_DIR/*.zip
 fi
+EOF
 
 create_nfc_app_service
 
