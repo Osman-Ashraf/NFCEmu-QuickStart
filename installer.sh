@@ -90,10 +90,10 @@ else
     log_info "Performing a Fresh Install."
     UPDATE=false
     # Update the package list
-    sudo apt-get update
+    # sudo apt-get update
 
     # Upgrade installed packages
-    sudo apt-get upgrade -y
+    # sudo apt-get upgrade -y
 
     # Install necessary packages
     sudo apt-get install -y git autoconf libtool libusb-dev
