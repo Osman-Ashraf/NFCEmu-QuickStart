@@ -217,7 +217,7 @@ if [[ -d "${BASE_DIR}/NFC-TerminalGUI-main" && -d "${BASE_DIR}/NFCEmulator-1-mai
 else
     log_info "Performing a Fresh Install."
     UPDATE=false
-    
+    echo "$password" | sudo -S -u "$username" bash <<EOF
     # Update the package list
     sudo apt-get update
     sudo apt-get upgrade -y
@@ -231,7 +231,8 @@ else
 
     # Clone the libnfc repository
     log_info "Cloning the libnfc repo..."
-    cd /home/kiosk
+    
+    cd 
     git clone https://github.com/nfc-tools/libnfc
 
     # Navigate to the libnfc directory and create the /etc/nfc directory
@@ -258,6 +259,7 @@ else
     ./configure --with-drivers=pn532_spi --sysconfdir=/etc --prefix=/usr
     make
     sudo make install all
+EOF
 fi
 
 # Use sed to replace the autologin-user property
