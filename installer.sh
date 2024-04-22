@@ -272,7 +272,7 @@ else
 fi
 
 # Create the base directory if it doesn't exist
-mkdir -p "${BASE_DIR}"
+sudo mkdir -p "${BASE_DIR}"
 
 # Download and extract the repositories
 download_and_extract() {
