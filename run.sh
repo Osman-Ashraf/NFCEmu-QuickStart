@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sleep 10
+
 # Define paths
 BASE_DIR=~/NFCEmu
 GUI_DIR="${BASE_DIR}/NFC-TerminalGUI-main/NFCD_GUI"
@@ -95,6 +97,6 @@ echo "Socket server started."
 
 # Start the C++ program
 echo "Starting C++ program..."
-"$CPP_PROGRAM_PATH"
+"$CPP_PROGRAM_PATH" &
 
 echo "All programs have been executed."
