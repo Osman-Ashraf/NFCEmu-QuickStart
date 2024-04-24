@@ -90,10 +90,10 @@ else
     log_info "Performing a Fresh Install."
     UPDATE=false
     # Update the package list
-    # sudo apt-get update
+    sudo apt-get update
 
     # Upgrade installed packages
-    # sudo apt-get upgrade -y
+    sudo apt-get upgrade -y
 
     # Install necessary packages
     sudo apt-get install -y git autoconf libtool libusb-dev
@@ -102,12 +102,6 @@ else
     log_info "Enabling the SPI interface on Pi..."
     sudo raspi-config nonint do_spi 0
 
-    # Define the command to be added to autostart
-    AUTOSTART_COMMAND="@bash /home/pie/NFCEmu/run.sh"
-
-    # Add the command to the end of autostart file
-    log_info "Adding the script to autostart file"
-    echo "$AUTOSTART_COMMAND" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
 
 
     # Clone the libnfc repository
@@ -230,6 +224,9 @@ else
     rm -rf $BASE_DIR/*.zip
 fi
 
+
+log_info "Adding the script to autostart file"
+    
 # Define variables
 DESKTOP_FILE="/etc/xdg/autostart/display.desktop"
 SCRIPT_NAME="run.sh"
