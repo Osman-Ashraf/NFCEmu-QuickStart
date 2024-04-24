@@ -230,5 +230,16 @@ else
     rm -rf $BASE_DIR/*.zip
 fi
 
+# Define variables
+DESKTOP_FILE="/etc/xdg/autostart/display.desktop"
+SCRIPT_NAME="run.sh"
+SCRIPT_EXEC="/home/pi/NFCEmu/run.sh"
+
+# Create the .desktop file
+echo "[Desktop Entry]" | sudo tee "$DESKTOP_FILE" > /dev/null
+echo "Name=$SCRIPT_NAME" | sudo tee -a "$DESKTOP_FILE" > /dev/null
+echo "Exec=$SCRIPT_EXEC" | sudo tee -a "$DESKTOP_FILE" > /dev/null
+
+
 # Perform a reboot
 reboot_five
