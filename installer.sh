@@ -237,6 +237,11 @@ echo "[Desktop Entry]" | sudo tee "$DESKTOP_FILE" > /dev/null
 echo "Name=$SCRIPT_NAME" | sudo tee -a "$DESKTOP_FILE" > /dev/null
 echo "Exec=$SCRIPT_EXEC" | sudo tee -a "$DESKTOP_FILE" > /dev/null
 
+log_info "Disabling the Splash Screen"
+
+# Edit cmdline.txt to remove splash parameter
+sudo sed -i '/splash/d' /boot/firmware/cmdline.txt
+
 
 # Perform a reboot
 reboot_five
