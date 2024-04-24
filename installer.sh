@@ -57,6 +57,57 @@ log_error() {
     printf "$red※ %s$reset\n" "$msg"
 }
 
+make_terminal_autostart() {
+    log_info "Adding the script to autostart file..."
+    
+    # Define variables
+    DESKTOP_FILE="/etc/xdg/autostart/display.desktop"
+    SCRIPT_NAME="run.sh"
+    SCRIPT_EXEC="/home/pi/NFCEmu/run.sh"
+
+    # Create the .desktop file
+    echo "[Desktop Entry]" | sudo tee "$DESKTOP_FILE" > /dev/null
+    echo "Name=$SCRIPT_NAME" | sudo tee -a "$DESKTOP_FILE" > /dev/null
+    echo "Exec=$SCRIPT_EXEC" | sudo tee -a "$DESKTOP_FILE" > /dev/null
+}
+
+# Function to disable the splash screen
+disable_splash_screen() {
+    log_info "Disabling the Splash Screen..."
+
+    # Edit cmdline.txt to remove splash parameter
+    sudo sed -i '/splash/d' /boot/firmware/cmdline.txt
+}
+
+# Function to check if splash parameter is removed successfully
+check_splash_removed() {
+    log_info "Checking if the splash parameter is removed..."
+
+    if grep -q "splash" /boot/firmware/cmdline.txt; then
+        log_info "Splash parameter still present. Splash Screen is not disabled."
+    else
+        log_info "Splash parameter removed successfully. Splash Screen is disabled."
+    fi
+}
+
+# Function to add cron job for daily system reboot
+add_daily_reboot_cron() {
+    log_info "Daily reboot cron job adding..."
+    
+    # Define the cron job command
+    local cron_job="0 0 * * * sudo /sbin/reboot"
+
+    # Check if the cron job already exists in the crontab
+    if ! crontab -l | grep -q "$cron_job"; then
+        # Add cron job to reboot system daily at 00:00
+        (crontab -l ; echo "$cron_job") | crontab -
+
+        log_info "Daily reboot cron job added successfully."
+    else
+        log_info "Daily reboot cron job already exists."
+    fi
+}
+
 reboot_five() {
     local delay=1
     for ((i = 4; i > 0; i--)); do
@@ -225,27 +276,10 @@ else
 fi
 
 
-log_info "Adding the script to autostart file"
-    
-# Define variables
-DESKTOP_FILE="/etc/xdg/autostart/display.desktop"
-SCRIPT_NAME="run.sh"
-SCRIPT_EXEC="/home/pi/NFCEmu/run.sh"
-
-# Create the .desktop file
-echo "[Desktop Entry]" | sudo tee "$DESKTOP_FILE" > /dev/null
-echo "Name=$SCRIPT_NAME" | sudo tee -a "$DESKTOP_FILE" > /dev/null
-echo "Exec=$SCRIPT_EXEC" | sudo tee -a "$DESKTOP_FILE" > /dev/null
-
-log_info "Disabling the Splash Screen"
-
-# Edit cmdline.txt to remove splash parameter
-sudo sed -i '/splash/d' /boot/firmware/cmdline.txt
-
-log_info "Setting up the reboot timer"
-
-# Add cron job to reboot system daily at 21:40
-(crontab -l ; echo "0 0 * * * sudo /sbin/reboot") | crontab -
+make_terminal_autostart
+disable_splash_screen
+check_splash_removed
+add_daily_reboot_cron
 
 # Perform a reboot
 reboot_five
