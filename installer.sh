@@ -242,6 +242,10 @@ log_info "Disabling the Splash Screen"
 # Edit cmdline.txt to remove splash parameter
 sudo sed -i '/splash/d' /boot/firmware/cmdline.txt
 
+log_info "Setting up the reboot timer"
+
+# Add cron job to reboot system daily at 21:40
+(crontab -l ; echo "0 0 * * * sudo /sbin/reboot") | crontab -
 
 # Perform a reboot
 reboot_five
