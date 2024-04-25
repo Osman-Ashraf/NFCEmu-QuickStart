@@ -57,6 +57,34 @@ log_error() {
     printf "$red※ %s$reset\n" "$msg"
 }
 
+set_user_autologin() {
+    log_info "Setting the user for autologin..."
+    # Define the username you want to enable auto-login for
+    USERNAME="pi"
+    
+    # Define the path to the lightdm.conf file
+    LIGHTDM_CONF="/etc/lightdm/lightdm.conf"
+    
+    # Backup the original lightdm.conf file
+    sudo cp $LIGHTDM_CONF $LIGHTDM_CONF.backup
+    
+    # Check if autologin configuration already exists in lightdm.conf
+    if grep -q "^autologin-user=" $LIGHTDM_CONF; then
+        # If autologin configuration exists, update it
+        sudo sed -i "s/^autologin-user=.*/autologin-user=$USERNAME/" $LIGHTDM_CONF
+
+        log_info "Autoloign setting updated!"
+    else
+        # If autologin configuration doesn't exist, add it
+        echo -e "[SeatDefaults]\nautologin-user=$USERNAME\nautologin-user-timeout=0" | sudo tee -a $LIGHTDM_CONF > /dev/null
+
+        log_info "Autologin setting added!"
+    fi
+    
+    # Restart the lightdm service for changes to take effect
+    sudo systemctl restart lightdm
+}
+
 make_terminal_autostart() {
     log_info "Adding the script to autostart file..."
     
@@ -275,7 +303,7 @@ else
     rm -rf $BASE_DIR/*.zip
 fi
 
-
+set_user_autologin
 make_terminal_autostart
 disable_splash_screen
 check_splash_removed
