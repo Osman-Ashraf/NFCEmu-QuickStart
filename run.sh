@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sleep 10
+sleep 3
 
 # Define paths
 BASE_DIR=~/NFCEmu
