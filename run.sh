@@ -6,6 +6,7 @@ sleep 3
 BASE_DIR=~/NFCEmu
 GUI_DIR="${BASE_DIR}/NFC-TerminalGUI-main/NFCD_GUI"
 GUI_PATH="${GUI_DIR}/ui_cutie.py"
+PIR_PATH="${GUI_DIR}/pir.py"
 CPP_PROGRAM_PATH="${BASE_DIR}/NFCEmulator-1-main/Firmware/RPi_AndroidHCE/android_hce"
 
 # Function to check if a process is running
@@ -87,6 +88,7 @@ echo "Starting socket server..."
 # Change to GUI directory to ensure relative paths in the Python script work correctly
 cd "$GUI_DIR"
 DISPLAY=:0 python3 "$GUI_PATH" &
+python3 "$PIR_PATH" &
 
 # Wait for the socket server to be ready
 echo "Waiting for the socket server to be ready..."
