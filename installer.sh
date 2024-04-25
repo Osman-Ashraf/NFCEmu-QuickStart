@@ -303,11 +303,11 @@ else
     rm -rf $BASE_DIR/*.zip
 fi
 
-set_user_autologin
 make_terminal_autostart
 disable_splash_screen
 check_splash_removed
 add_daily_reboot_cron
+set_user_autologin
 
 # Perform a reboot
 # reboot_five
