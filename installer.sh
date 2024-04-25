@@ -310,4 +310,4 @@ check_splash_removed
 add_daily_reboot_cron
 
 # Perform a reboot
-reboot_five
+# reboot_five
