@@ -87,7 +87,8 @@ echo "Starting socket server..."
 
 # Change to GUI directory to ensure relative paths in the Python script work correctly
 cd "$GUI_DIR"
-DISPLAY=:0 python3 "$GUI_PATH" &
+export DISPLAY=:0.0
+python3 "$GUI_PATH" &
 # python3 "$PIR_PATH" &
 
 # Wait for the socket server to be ready
