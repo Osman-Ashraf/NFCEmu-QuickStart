@@ -155,13 +155,13 @@ set_driver_to_fkms() {
     # Check if the old overlay exists in the file
     if grep -q "^$old_overlay" /boot/firmware/config.txt; then
         # Comment out the old overlay
-        sed -i "s/^$old_overlay/#$old_overlay/g" /boot/firmware/config.txt
+        sudo sed -i "s/^$old_overlay/#$old_overlay/g" /boot/firmware/config.txt
     fi
     
     # Check if the new overlay already exists in the file
     if ! grep -q "^$new_overlay" /boot/firmware/config.txt; then
         # Add the new overlay
-        echo "$new_overlay" >> /boot/firmware/config.txt
+        echo "$new_overlay" | sudo tee -a /boot/firmware/config.txt > /dev/null
     fi
 }
     
