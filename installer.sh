@@ -146,6 +146,22 @@ reboot_five() {
     sudo reboot
 }
 
+
+set_driver_to_fkms() {
+    # Define the old and new overlay strings
+    old_overlay="dtoverlay=vc4-kms-v3d"
+    new_overlay="dtoverlay=vc4-fkms-v3d"
+    
+    # Comment out the old overlay if it exists
+    sed -i "/^$old_overlay/s/^/#/" /boot/firmware/config.txt
+    
+    # Add the new overlay if it doesn't exist
+    if ! grep -q "^$new_overlay" /boot/firmware/config.txt; then
+        echo "$new_overlay" >> /boot/firmware/config.txt
+    fi
+}
+    
+
 # Check for internet connection
 if ! ping -c 1 8.8.8.8 &>/dev/null; then
     log_error "No internet connection. Please check your connection and try again."
@@ -308,6 +324,7 @@ disable_splash_screen
 check_splash_removed
 add_daily_reboot_cron
 set_user_autologin
+set_driver_to_fkms
 
 # Perform a reboot
 # reboot_five
