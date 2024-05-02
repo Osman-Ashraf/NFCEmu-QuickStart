@@ -152,11 +152,15 @@ set_driver_to_fkms() {
     old_overlay="dtoverlay=vc4-kms-v3d"
     new_overlay="dtoverlay=vc4-fkms-v3d"
     
-    # Comment out the old overlay if it exists
-    sed -i "/^$old_overlay/s/^/#/" /boot/firmware/config.txt
+    # Check if the old overlay exists in the file
+    if grep -q "^$old_overlay" /boot/firmware/config.txt; then
+        # Comment out the old overlay
+        sed -i "s/^$old_overlay/#$old_overlay/g" /boot/firmware/config.txt
+    fi
     
-    # Add the new overlay if it doesn't exist
+    # Check if the new overlay already exists in the file
     if ! grep -q "^$new_overlay" /boot/firmware/config.txt; then
+        # Add the new overlay
         echo "$new_overlay" >> /boot/firmware/config.txt
     fi
 }
@@ -319,11 +323,12 @@ else
     rm -rf $BASE_DIR/*.zip
 fi
 
+
+set_driver_to_fkms
 make_terminal_autostart
 disable_splash_screen
 check_splash_removed
 add_daily_reboot_cron
-set_driver_to_fkms
 
 # setting autologin must be the last step
 set_user_autologin
