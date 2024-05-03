@@ -324,7 +324,7 @@ fi
 
 
 # wstp9it2
-# set_driver_to_fkms
+set_driver_to_fkms
 make_terminal_autostart
 disable_splash_screen
 check_splash_removed
