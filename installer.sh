@@ -156,12 +156,11 @@ set_driver_to_fkms() {
     if grep -q "^$old_overlay" /boot/firmware/config.txt; then
         # Comment out the old overlay
         sudo sed -i "s/^$old_overlay/#$old_overlay/g" /boot/firmware/config.txt
-    fi
     
-    # Check if the new overlay already exists in the file
-    if ! grep -q "^$new_overlay" /boot/firmware/config.txt; then
-        # Add the new overlay
-        echo "$new_overlay" | sudo tee -a /boot/firmware/config.txt > /dev/null
+        # Add the new overlay on the line following the old overlay
+        sudo sed -i "/^#*$old_overlay/a $new_overlay" /boot/firmware/config.txt
+    else
+        echo "Old overlay '$old_overlay' not found in /boot/firmware/config.txt"
     fi
 }
     
@@ -324,7 +323,8 @@ else
 fi
 
 
-set_driver_to_fkms
+# wstp9it2
+# set_driver_to_fkms
 make_terminal_autostart
 disable_splash_screen
 check_splash_removed
