@@ -107,7 +107,4 @@ cd ~/NFCEmu
 ## ✍️ Authors <a name = "authors"></a>
 
 - [@Nauman3S](https://github.com/Nauman3S) - Development and Deployment
-
-## 🤝 Contributors <a name = "contributors"></a>
-
 - [@ali-yasir-binairy](https://github.com/ali-yasir-binairy) 
