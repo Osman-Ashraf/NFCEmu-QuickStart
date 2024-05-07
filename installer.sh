@@ -324,14 +324,14 @@ fi
 
 
 # wstp9it2
-set_driver_to_fkms
-make_terminal_autostart
-disable_splash_screen
-check_splash_removed
-add_daily_reboot_cron
+# set_driver_to_fkms
+# make_terminal_autostart
+# disable_splash_screen
+# check_splash_removed
+# add_daily_reboot_cron
 
 # setting autologin must be the last step
-set_user_autologin
+# set_user_autologin
 
 # Perform a reboot
 # reboot_five
