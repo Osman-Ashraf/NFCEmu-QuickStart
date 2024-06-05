@@ -330,7 +330,7 @@ check_splash_removed
 add_daily_reboot_cron
 
 # setting autologin must be the last step
-# set_user_autologin
+set_user_autologin
 
 # Perform a reboot
 # reboot_five
