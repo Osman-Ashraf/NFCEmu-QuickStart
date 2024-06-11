@@ -10,9 +10,19 @@ CPP_PROGRAM_PATH="${BASE_DIR}/NFCEmulator-1-main/Firmware/RPi_AndroidHCE/android
 LOG_DIR="${BASE_DIR}/logs"
 PYTHON_LOG="${LOG_DIR}/python_gui.log"
 CPP_LOG="${LOG_DIR}/android_hce.log"
+SYS_LOG="${LOG_DIR}/system_usage.log"
 
 # Ensure the log directory exists
 mkdir -p "$LOG_DIR"
+
+# Function to log system usage
+log_system_usage() {
+    echo "Logging system usage..."
+    while :; do
+        echo "$(date): CPU: $(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')%, Mem: $(free -m | awk 'NR==2{printf "%.2f", $3*100/$2 }')" >> "$SYS_LOG"
+        sleep 5
+    done
+}
 
 # Function to check if a process is running
 is_process_running() {
@@ -64,6 +74,9 @@ wait_for_process_termination() {
     echo "Timeout reached. Forcefully killing process (PID: $pid)..."
     kill -9 "$pid"
 }
+
+# Start logging system usage
+log_system_usage &
 
 # Check and make the desired port available
 if is_port_in_use 9999; then
