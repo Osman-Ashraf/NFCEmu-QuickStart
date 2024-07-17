@@ -4,7 +4,7 @@ sleep 3
 BASE_DIR=~/NFCEmu
 GUI_DIR="${BASE_DIR}/NFC-TerminalGUI-main/NFCD_GUI"
 GUI_PATH="${GUI_DIR}/ui_cutie.py"
-PYTHON_PROGRAM_PATH="${BASE_DIR}/android_hce.py"
+PYTHON_PROGRAM_PATH="${BASE_DIR}/NFCEmulator-1-main/Firmware/RPi_AndroidHCE/android_hce.py"
 LOG_DIR="${BASE_DIR}/logs"
 PYTHON_LOG="${LOG_DIR}/python_gui.log"
 ANDROID_HCE_LOG="${LOG_DIR}/android_hce.log"
