@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Spinner animation
 spinner() {
     local pid=$1
@@ -7,12 +6,12 @@ spinner() {
     local spinstr='|/-\'
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
         local temp=${spinstr#?}
-        printf " [%c]  " "$spinstr"
+        printf " [%c] " "$spinstr"
         local spinstr=$temp${spinstr%"$temp"}
         sleep $delay
         printf "\b\b\b\b\b\b"
     done
-    printf "    \b\b\b\b"
+    printf " \b\b\b\b"
 }
 
 # Check for internet connection
@@ -31,7 +30,7 @@ fi
 BASE_DIR=~/NFCEmu
 
 # Check if it's a fresh install or an update
-if [[ -d "${BASE_DIR}/NFC-TerminalGUI-main" && -d "${BASE_DIR}/NFCEmulator-1-main" ]]; then
+if [[ -d "${BASE_DIR}/NFC-TerminalGUI-main" && -d "${BASE_DIR}/NFCEmulator-1-nfc-communicator-python-port" ]]; then
     UPDATE=true
 else
     UPDATE=false
@@ -41,9 +40,9 @@ fi
 display_message() {
     echo -e "\n\n"
     echo "##################################################"
-    echo "#                                                #"
-    echo "#                 $1                 #"
-    echo "#                                                #"
+    echo "# #"
+    echo "# $1 #"
+    echo "# #"
     echo "##################################################"
     echo -e "\n\n"
 }
@@ -66,28 +65,26 @@ download_and_extract() {
 
     # Download the repository
     curl -s -H "Authorization: token ${TOKEN}" -L "${repo_url}" -o "${output_zip}" &
-
     # Start the spinner animation
     spinner $! &
-
     # Wait for download to complete
     wait
 
     # Extract the repository
     unzip -o -q "${output_zip}" -d "${BASE_DIR}"
-    # rm "${output_zip}"  # Remove the downloaded zip file
+    # rm "${output_zip}" # Remove the downloaded zip file
 }
 
 # Download and extract repositories in parallel
 download_and_extract "https://github.com/Osman-Ashraf/NFC-TerminalGUI/archive/refs/heads/main.zip" "NFC-TerminalGUI" &
-download_and_extract "https://github.com/Osman-Ashraf/NFCEmulator-1/archive/refs/heads/main.zip" "NFCEmulator-1-main" &
+download_and_extract "https://github.com/Osman-Ashraf/NFCEmulator-1/archive/refs/heads/nfc-communicator-python-port.zip" "NFCEmulator-1-nfc-communicator-python-port" &
 
 # Wait for both downloads to complete
 wait
 
 # Clean up and setup NFC-TerminalGUI
 cd "${BASE_DIR}/NFC-TerminalGUI-main" || exit
-shopt -s extglob  # Enable extended globbing
+shopt -s extglob # Enable extended globbing
 rm -rf !("NFCD_GUI")
 cd NFCD_GUI || exit
 
@@ -99,25 +96,24 @@ if ! pip3 freeze | grep -q -f requirements.txt; then
 fi
 
 # Clean up and setup NFCEmulator
-cd "${BASE_DIR}/NFCEmulator-1-main" || exit
+cd "${BASE_DIR}/NFCEmulator-1-nfc-communicator-python-port" || exit
 rm -rf !("Firmware")
 cd Firmware || exit
 rm -rf !("RPi_AndroidHCE")
 cd RPi_AndroidHCE || exit
-make all & 
+make all &
 spinner $! &
 wait
 
 # Get run script
 cd ${BASE_DIR} || exit
-wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/run.sh -O ${BASE_DIR}/run.sh 
+wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/run.sh -O ${BASE_DIR}/run.sh
 wait
 chmod +x run.sh
 
 # End message
 if [ "$UPDATE" = true ]; then
     display_message "NFCEmulator Updated"
-    
     rm -rf $BASE_DIR/*.zip
 else
     display_message "NFCEmulator Installed"
