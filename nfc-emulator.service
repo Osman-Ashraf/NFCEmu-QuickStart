@@ -1,0 +1,19 @@
+[Unit]
+Description=NFC Emulator Service
+After=multi-user.target
+Wants=multi-user.target
+
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi
+ExecStart=/bin/bash /home/pi/NFCEmu/run.sh
+Restart=on-failure
+RestartSec=10
+User=root
+Environment=DISPLAY=:0
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=XAUTHORITY=/home/pi/.Xauthority
+
+[Install]
+WantedBy=multi-user.target
