@@ -146,13 +146,13 @@ while true; do
     wait -n $GUI_PID $PYTHON_PID
 
     # Check which process exited and restart it
-    if ! kill -0 $GUI_PID 2>/dev/null; then
-        echo "Socket server (PID: $GUI_PID) exited. Restarting..."
-        start_gui
-    fi
-    if ! kill -0 $PYTHON_PID 2>/dev/null; then
-        echo "Python program (PID: $PYTHON_PID) exited. Restarting..."
-        start_python_program
-    fi
+    # if ! kill -0 $GUI_PID 2>/dev/null; then
+    #     echo "Socket server (PID: $GUI_PID) exited. Restarting..."
+    #     start_gui
+    # fi
+    # if ! kill -0 $PYTHON_PID 2>/dev/null; then
+    #     echo "Python program (PID: $PYTHON_PID) exited. Restarting..."
+    #     start_python_program
+    # fi
     sleep 0.5
 done
