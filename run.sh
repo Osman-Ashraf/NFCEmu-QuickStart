@@ -11,6 +11,7 @@ env
 # Define paths
 BASE_DIR=/home/pi/NFCEmu
 GUI_DIR="${BASE_DIR}/NFC-TerminalGUI-main/NFCD_GUI"
+VENV_DIR="$GUI_DIR/venv"
 GUI_PATH="${GUI_DIR}/ui_cutie.py"
 PYTHON_PROGRAM_PATH="${BASE_DIR}/NFCEmulator-1-main/Firmware/RPi_AndroidHCE/android_hce.py"
 LOG_DIR="${BASE_DIR}/logs"
@@ -25,7 +26,12 @@ mkdir -p "$LOG_DIR"
 log_system_usage() {
     echo "Logging system usage..."
     while true; do
-        echo "$(date): CPU: $(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')%, Mem: $(free -m | awk 'NR==2{printf "%.2f", $3*100/$2 }')" >>"$SYS_LOG"
+        cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+        mem_usage=$(free -m | awk 'NR==2{printf "%.2f", $3*100/$2 }')
+        total_mem=$(free -m | awk 'NR==2{printf "%s", $2}')
+        used_mem=$(free -m | awk 'NR==2{printf "%s", $3}')
+        free_mem=$(free -m | awk 'NR==2{printf "%s", $4}')
+        echo "$(date): CPU: ${cpu_usage}%, Mem: ${mem_usage}%, Total Mem: ${total_mem}MB, Used Mem: ${used_mem}MB, Free Mem: ${free_mem}MB" >>"$SYS_LOG"
         sleep 5
     done
 }
@@ -96,18 +102,19 @@ graceful_kill() {
 # Start the socket server (Qt based GUI using PyQt5)
 start_gui() {
     cd "$GUI_DIR"
+    if [ ! -d "$VENV_DIR" ]; then
+        python3 -m venv "$VENV_DIR"
+        source "$VENV_DIR/bin/activate"  # Activate the virtual environment
+        $VENV_DIR/bin/pip3 install -r requirements.txt
+        # sudo apt install libxcb-cursor-dev
+    fi
+    source "$VENV_DIR/bin/activate"  # Activate the virtual environment
     DISPLAY=:0 python3 "$GUI_PATH" >"$PYTHON_LOG" 2>&1 &
     GUI_PID=$!
     echo "Socket server started with PID: $GUI_PID"
 }
 
-# Start the Python program
-start_python_program() {
-    cd "$(dirname "$PYTHON_PROGRAM_PATH")"
-    python3 "$PYTHON_PROGRAM_PATH" >"$ANDROID_HCE_LOG" 2>&1 &
-    PYTHON_PID=$!
-    echo "Python program started with PID: $PYTHON_PID"
-}
+
 
 # Start logging system usage
 log_system_usage &
@@ -120,39 +127,11 @@ while true; do
         start_gui
     fi
 
-    # Wait for the socket server to be ready
-    echo "Waiting for the socket server to be ready..."
-    timeout=60
-    while ! is_socket_server_ready; do
-        sleep 0.5
-        timeout=$((timeout - 1))
-        if [ $timeout -le 0 ]; then
-            echo "Timeout waiting for socket server. Restarting..."
-            # kill $GUI_PID
-            continue 2 # Continue the outer loop
-        fi
-    done
-
-    # Start the Python program if it's not running
-    if ! is_process_running "$PYTHON_PROGRAM_PATH"; then
-        start_python_program
-    fi
-
-    echo "Socket server started."
 
     echo "All programs have been executed."
 
     # Wait for either process to exit
-    wait -n $GUI_PID $PYTHON_PID
+    wait -n $GUI_PID
 
-    # Check which process exited and restart it
-    # if ! kill -0 $GUI_PID 2>/dev/null; then
-    #     echo "Socket server (PID: $GUI_PID) exited. Restarting..."
-    #     start_gui
-    # fi
-    # if ! kill -0 $PYTHON_PID 2>/dev/null; then
-    #     echo "Python program (PID: $PYTHON_PID) exited. Restarting..."
-    #     start_python_program
-    # fi
     sleep 0.5
 done
