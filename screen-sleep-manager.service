@@ -1,0 +1,13 @@
+[Unit]
+Description=Display Power Manager
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/NFCEmu/NFC-TerminalGUI-main/NFCD_GUI/display_power_manager.py
+WorkingDirectory=/home/pi/NFCEmu/NFC-TerminalGUI-main/NFCD_GUI
+Restart=always
+RestartSec=5
+User=pi
+
+[Install]
+WantedBy=multi-user.target
