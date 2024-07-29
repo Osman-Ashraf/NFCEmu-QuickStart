@@ -64,7 +64,7 @@ wget -O -  https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main
 ## ⛏️ Running <a name = "test"></a>
 
 1.  The program runs automatically once installed successfully.
-2.  
+
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - [Python3](https://www.python.org/) - Raspberry Pi Firmware
