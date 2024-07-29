@@ -21,13 +21,14 @@
 
 ## 📝 Table of Contents
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Prerequisites](#deployment)
-- [Installation and Config](#Installation_and_Config)
-- [Test](#test)
-- [Built Using](#built_using)
-- [Authors](#authors)
+- [📝 Table of Contents](#-table-of-contents)
+- [🧐 About ](#-about-)
+- [🏁 Getting Started ](#-getting-started-)
+  - [Prerequisites ](#prerequisites-)
+- [Installation and Update ](#installation-and-update-)
+- [⛏️ Running ](#️-running-)
+- [⛏️ Built Using ](#️-built-using-)
+- [✍️ Authors ](#️-authors-)
 
 ## 🧐 About <a name = "about"></a>
 
@@ -62,12 +63,8 @@ wget -O -  https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main
 ```
 ## ⛏️ Running <a name = "test"></a>
 
-1.  The program can be run using the following command
-```bash
-cd ~/NFCEmu
-./run.sh
-```
-
+1.  The program runs automatically once installed successfully.
+2.  
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - [Python3](https://www.python.org/) - Raspberry Pi Firmware

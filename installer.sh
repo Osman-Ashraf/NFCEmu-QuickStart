@@ -28,6 +28,10 @@ fi
 
 # Base directory
 BASE_DIR=~/NFCEmu
+SYSTEMD_SERVICES_DIR="/etc/systemd/system"
+# URLs of the services
+NFC_EMULATOR_URL="https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/nfc-emulator.service"
+SCREEN_SLEEP_MANAGER_URL="https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/screen-sleep-manager.service"
 
 # Check if it's a fresh install or an update
 if [[ -d "${BASE_DIR}/NFC-TerminalGUI-main" ]]; then
@@ -107,10 +111,34 @@ wait
 # Get run script
 cd ${BASE_DIR} || exit
 wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/run.sh -O ${BASE_DIR}/run.sh
-wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/nfc-emulator.service -O ${BASE_DIR}/run.sh
-wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/screen-sleep-manager.service -O ${BASE_DIR}/run.sh
 wait
 chmod +x run.sh
+
+# Download the service files
+wget $NFC_EMULATOR_URL -O ${SYSTEMD_SERVICES_DIR}/nfc-emulator.service
+wait
+wget $SCREEN_SLEEP_MANAGER_URL -O ${SYSTEMD_SERVICES_DIR}/screen-sleep-manager.service
+wait
+# Reload the systemd daemon to recognize the new service files
+systemctl daemon-reload
+
+# Function to check and start a service if it's not running
+check_and_start_service() {
+    SERVICE_NAME=$1
+    if systemctl is-active --quiet ${SERVICE_NAME}; then
+        echo "${SERVICE_NAME} is already running."
+    else
+        echo "${SERVICE_NAME} is not running. Starting it now..."
+        systemctl enable ${SERVICE_NAME}
+        systemctl start ${SERVICE_NAME}
+    fi
+}
+
+# Check and start nfc-emulator.service
+check_and_start_service nfc-emulator.service
+
+# Check and start screen-sleep-manager.service
+check_and_start_service screen-sleep-manager.service
 
 # End message
 if [ "$UPDATE" = true ]; then
@@ -119,4 +147,7 @@ if [ "$UPDATE" = true ]; then
 else
     display_message "NFCEmulator Installed"
     rm -rf $BASE_DIR/*.zip
+    # Print status of the services
+    systemctl status nfc-emulator.service
+    systemctl status screen-sleep-manager.service
 fi
