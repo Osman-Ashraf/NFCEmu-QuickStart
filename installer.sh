@@ -30,7 +30,7 @@ fi
 BASE_DIR=~/NFCEmu
 
 # Check if it's a fresh install or an update
-if [[ -d "${BASE_DIR}/NFC-TerminalGUI-main" && -d "${BASE_DIR}/NFCEmulator-1-nfc-communicator-python-port" ]]; then
+if [[ -d "${BASE_DIR}/NFC-TerminalGUI-main" ]]; then
     UPDATE=true
 else
     UPDATE=false
@@ -77,7 +77,6 @@ download_and_extract() {
 
 # Download and extract repositories in parallel
 download_and_extract "https://github.com/Osman-Ashraf/NFC-TerminalGUI/archive/refs/heads/main.zip" "NFC-TerminalGUI" &
-download_and_extract "https://github.com/Osman-Ashraf/NFCEmulator-1/archive/refs/heads/nfc-communicator-python-port.zip" "NFCEmulator-1-nfc-communicator-python-port" &
 
 # Wait for both downloads to complete
 wait
@@ -108,6 +107,8 @@ wait
 # Get run script
 cd ${BASE_DIR} || exit
 wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/run.sh -O ${BASE_DIR}/run.sh
+wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/nfc-emulator.service -O ${BASE_DIR}/run.sh
+wget https://raw.githubusercontent.com/Osman-Ashraf/NFCEmu-QuickStart/main/screen-sleep-manager.service -O ${BASE_DIR}/run.sh
 wait
 chmod +x run.sh
 

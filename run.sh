@@ -13,10 +13,8 @@ BASE_DIR=/home/pi/NFCEmu
 GUI_DIR="${BASE_DIR}/NFC-TerminalGUI-main/NFCD_GUI"
 VENV_DIR="$GUI_DIR/venv"
 GUI_PATH="${GUI_DIR}/ui_cutie.py"
-PYTHON_PROGRAM_PATH="${BASE_DIR}/NFCEmulator-1-main/Firmware/RPi_AndroidHCE/android_hce.py"
 LOG_DIR="${BASE_DIR}/logs"
 PYTHON_LOG="${LOG_DIR}/python_gui.log"
-ANDROID_HCE_LOG="${LOG_DIR}/android_hce.log"
 SYS_LOG="${LOG_DIR}/system_usage.log"
 
 # Ensure the log directory exists
@@ -40,19 +38,6 @@ log_system_usage() {
 is_process_running() {
     local process_name="$1"
     pgrep -f "$process_name" >/dev/null
-    return $?
-}
-
-# Function to check if the socket server is listening on the expected port
-is_socket_server_ready() {
-    timeout 1 bash -c "echo > /dev/tcp/localhost/9999" 2>/dev/null
-    return $?
-}
-
-# Function to check if a port is in use
-is_port_in_use() {
-    local port="$1"
-    lsof -i :"$port" >/dev/null 2>&1
     return $?
 }
 
@@ -84,6 +69,7 @@ wait_for_process_termination() {
     echo "Timeout reached. Forcefully killing process (PID: $pid)..."
     kill -9 "$pid" 2>/dev/null
 }
+
 # Function to gracefully kill a process by PID
 graceful_kill() {
     local pid="$1"
@@ -99,22 +85,21 @@ graceful_kill() {
         fi
     fi
 }
+
 # Start the socket server (Qt based GUI using PyQt5)
 start_gui() {
     cd "$GUI_DIR"
     if [ ! -d "$VENV_DIR" ]; then
         python3 -m venv "$VENV_DIR"
-        source "$VENV_DIR/bin/activate"  # Activate the virtual environment
+        source "$VENV_DIR/bin/activate" # Activate the virtual environment
         $VENV_DIR/bin/pip3 install -r requirements.txt
         # sudo apt install libxcb-cursor-dev
     fi
-    source "$VENV_DIR/bin/activate"  # Activate the virtual environment
+    source "$VENV_DIR/bin/activate" # Activate the virtual environment
     DISPLAY=:0 python3 "$GUI_PATH" >"$PYTHON_LOG" 2>&1 &
     GUI_PID=$!
     echo "Socket server started with PID: $GUI_PID"
 }
-
-
 
 # Start logging system usage
 log_system_usage &
@@ -126,7 +111,6 @@ while true; do
     if ! is_process_running "$GUI_PATH"; then
         start_gui
     fi
-
 
     echo "All programs have been executed."
 

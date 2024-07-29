@@ -8,6 +8,9 @@ WorkingDirectory=/home/pi/NFCEmu/NFC-TerminalGUI-main/NFCD_GUI
 Restart=always
 RestartSec=5
 User=pi
+Environment=DISPLAY=:0
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=XAUTHORITY=/home/pi/.Xauthority
 
 [Install]
 WantedBy=multi-user.target
